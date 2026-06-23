@@ -1,4 +1,7 @@
 /* ============================================================
+
+DIbu
+
    CAB DRIVER PROFILE — script.js
    Features: scroll reveal, arc counters, star ratings,
              copy UPI, tip amount buttons, working UPI pay,
