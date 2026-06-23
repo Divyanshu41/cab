@@ -1,0 +1,52 @@
+<svg width="900" height="900" viewBox="0 0 900 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="130" y1="90" x2="790" y2="820" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F3F6FB"/>
+      <stop offset="1" stop-color="#DDE7F3"/>
+    </linearGradient>
+    <linearGradient id="line" x1="180" y1="150" x2="720" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#101828"/>
+      <stop offset="1" stop-color="#27364D"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="900" rx="72" fill="url(#bg)"/>
+  <rect x="112" y="112" width="676" height="676" rx="36" fill="#FFFFFF"/>
+  <rect x="148" y="148" width="120" height="120" rx="18" fill="url(#line)"/>
+  <rect x="632" y="148" width="120" height="120" rx="18" fill="url(#line)"/>
+  <rect x="148" y="632" width="120" height="120" rx="18" fill="url(#line)"/>
+  <rect x="304" y="148" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="378" y="148" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="452" y="148" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="526" y="148" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="304" y="222" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="378" y="222" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="600" y="304" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="674" y="304" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="304" y="304" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="452" y="304" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="526" y="304" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="304" y="378" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="378" y="378" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="526" y="378" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="600" y="378" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="674" y="378" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="304" y="452" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="452" y="452" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="674" y="452" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="304" y="526" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="378" y="526" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="452" y="526" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="526" y="526" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="600" y="526" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="674" y="526" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="304" y="600" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="452" y="600" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="526" y="600" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="600" y="600" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="378" y="674" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="452" y="674" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="526" y="674" width="52" height="52" rx="10" fill="#101828"/>
+  <rect x="112" y="112" width="676" height="676" rx="36" stroke="#101828" stroke-opacity="0.06" stroke-width="4"/>
+  <rect x="112" y="846" width="676" height="12" rx="6" fill="#F6C76A" fill-opacity="0.45"/>
+  <text x="450" y="850" text-anchor="middle" fill="#101828" fill-opacity="0.75" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="700">UPI QR Placeholder</text>
+</svg>

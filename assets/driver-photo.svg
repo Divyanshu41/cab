@@ -1,0 +1,27 @@
+<svg width="900" height="900" viewBox="0 0 900 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="80" x2="780" y2="820" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#13233E"/>
+      <stop offset="1" stop-color="#09111E"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="225" y1="130" x2="650" y2="760" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F6C76A"/>
+      <stop offset="1" stop-color="#6DD9FF"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="900" rx="72" fill="url(#bg)"/>
+  <circle cx="680" cy="190" r="170" fill="#F6C76A" fill-opacity="0.11"/>
+  <circle cx="210" cy="720" r="220" fill="#6DD9FF" fill-opacity="0.10"/>
+  <ellipse cx="450" cy="620" rx="220" ry="160" fill="url(#accent)" fill-opacity="0.12"/>
+  <g transform="translate(210 150)">
+    <circle cx="240" cy="170" r="120" fill="#E8EEF8" fill-opacity="0.12"/>
+    <path d="M232 164C232 131 258 104 291 104C324 104 351 131 351 164C351 197 324 224 291 224C258 224 232 197 232 164Z" fill="#F7E8D4"/>
+    <path d="M176 378C176 305 234 247 306 247C378 247 436 305 436 378V430H176V378Z" fill="#1D2F4D"/>
+    <path d="M214 355C214 323 240 297 272 297H332C364 297 390 323 390 355V430H214V355Z" fill="#F6C76A" fill-opacity="0.18"/>
+    <rect x="160" y="430" width="300" height="28" rx="14" fill="#6DD9FF" fill-opacity="0.55"/>
+    <rect x="188" y="474" width="244" height="24" rx="12" fill="#FFFFFF" fill-opacity="0.12"/>
+    <rect x="212" y="522" width="196" height="20" rx="10" fill="#FFFFFF" fill-opacity="0.10"/>
+  </g>
+  <rect x="112" y="78" width="676" height="744" rx="62" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="4"/>
+  <text x="450" y="820" text-anchor="middle" fill="#F5F7FB" fill-opacity="0.65" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">Driver Photo Placeholder</text>
+</svg>
