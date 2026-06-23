@@ -382,55 +382,43 @@
         <h2>What riders say</h2>
       </div>
 
-      <!-- Editable: Add or modify reviews here -->
-      <div class="reviews-grid">
-        <article class="review-card glass-card">
-          <div class="review-top">
-            <div class="reviewer-avatar">A</div>
-            <div>
-              <h3>Arpita D.</h3>
-              <div class="stars">
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-              </div>
-            </div>
-          </div>
-          <p>"Very polite, punctual, and smooth driving. The cab was clean and the whole ride felt premium. Would always prefer Indradev bhai!"</p>
-          <div class="review-platform"><i class="fa-brands fa-uber"></i> Uber</div>
-        </article>
 
-        <article class="review-card glass-card">
-          <div class="review-top">
-            <div class="reviewer-avatar r">R</div>
-            <div>
-              <h3>Rahul S.</h3>
-              <div class="stars">
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-              </div>
-            </div>
-          </div>
-          <p>"Excellent communication and safe driving through Kolkata traffic. I felt comfortable throughout. Highly recommended!"</p>
-          <div class="review-platform"><i class="fa-solid fa-bolt"></i> Rapido</div>
-        </article>
 
-        <article class="review-card glass-card">
-          <div class="review-top">
-            <div class="reviewer-avatar n">N</div>
-            <div>
-              <h3>Neha M.</h3>
-              <div class="stars">
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-              </div>
-            </div>
-          </div>
-          <p>"Professional service with a calm attitude. He made sure I reached on time and felt safe. Definitely one of the best!"</p>
-          <div class="review-platform"><i class="fa-brands fa-uber"></i> Uber</div>
-        </article>
-      </div>
-    </section>
+      <div class="glass-card" style="padding:20px;margin-bottom:20px">
 
+  <h3>Leave a Review</h3>
+
+  <input id="reviewName" type="text" placeholder="Your Name">
+
+  <br><br>
+
+  <select id="reviewRating">
+    <option value="5">⭐⭐⭐⭐⭐</option>
+    <option value="4">⭐⭐⭐⭐</option>
+    <option value="3">⭐⭐⭐</option>
+    <option value="2">⭐⭐</option>
+    <option value="1">⭐</option>
+  </select>
+
+  <br><br>
+
+  <textarea
+    id="reviewComment"
+    placeholder="Write your review"
+  ></textarea>
+
+  <br><br>
+
+  <button
+    class="btn btn-gold"
+    id="submitReview"
+  >
+    Submit Review
+  </button>
+
+</div>
+
+ 
     <!-- ===================== TRUST BADGES ===================== -->
     <section class="section reveal">
       <div class="sec-head">
@@ -474,7 +462,6 @@
     </section>
 
   </main>
-
-  <script src="script.js"></script> 
+  <script type="module" src="script.js"></script>
 </body>
 </html>

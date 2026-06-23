@@ -8,6 +8,33 @@ DIbu
              smooth scroll, progress bar
    ============================================================ */
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA-TtB1x3T23NIxJgtzvqNEF6ImYxri678",
+  authDomain: "driver-profile-32113.firebaseapp.com",
+  projectId: "driver-profile-32113",
+  storageBucket: "driver-profile-32113.firebasestorage.app",
+  messagingSenderId: "1090303942049",
+  appId: "1:1090303942049:web:33acaae837fbfc3ee9bfe0",
+  measurementId: "G-WLEE9C6JE0"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+
+
+
+
 /* ---------- SCROLL REVEAL ---------- */
 const revealObserver = new IntersectionObserver(
   (entries) => {
@@ -273,3 +300,113 @@ window.addEventListener('scroll', () => {
   });
   lastScroll = current;
 }, { passive: true });
+
+
+
+/* ===========================
+   FIREBASE REVIEWS
+=========================== */
+
+async function loadReviews() {
+
+  const container =
+    document.getElementById("reviewsContainer");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  const snapshot =
+    await getDocs(
+      collection(db, "reviews")
+    );
+
+  let totalRating = 0;
+  let totalReviews = 0;
+
+  snapshot.forEach((doc) => {
+
+    const review = doc.data();
+
+    totalRating += review.rating;
+    totalReviews++;
+
+    container.innerHTML += `
+      <article class="review-card glass-card">
+        <div class="review-top">
+          <div class="reviewer-avatar">
+            ${review.name.charAt(0)}
+          </div>
+
+          <div>
+            <h3>${review.name}</h3>
+
+            <div class="stars">
+              ${'<i class="fa-solid fa-star"></i>'.repeat(review.rating)}
+            </div>
+          </div>
+        </div>
+
+        <p>${review.comment}</p>
+
+      </article>
+    `;
+  });
+
+  if (totalReviews > 0) {
+
+    const avg =
+      (totalRating / totalReviews)
+      .toFixed(1);
+
+    console.log(
+      "Average Rating:",
+      avg
+    );
+  }
+}
+
+loadReviews();
+
+document
+.getElementById("submitReview")
+?.addEventListener(
+  "click",
+  async () => {
+
+    const name =
+      document.getElementById("reviewName").value;
+
+    const rating =
+      Number(
+        document.getElementById("reviewRating").value
+      );
+
+    const comment =
+      document.getElementById("reviewComment").value;
+
+    if (!name || !comment) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    await addDoc(
+      collection(db, "reviews"),
+      {
+        name,
+        rating,
+        comment,
+        createdAt: new Date()
+      }
+    );
+
+    alert("Review Submitted ✅");
+
+    document.getElementById("reviewName").value = "";
+    document.getElementById("reviewComment").value = "";
+
+    loadReviews();
+  }
+);
+
+
