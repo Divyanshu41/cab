@@ -87,46 +87,126 @@
     </section>
 
     <!-- ===================== STATS ===================== -->
-    <!-- Editable: Update data-target values for counters -->
+    <!-- Editable: Update data-target, data-max, arc stroke-dasharray values -->
     <section class="stats-grid reveal" aria-label="Ratings and statistics">
+
+      <!-- Uber Rating -->
       <article class="stat-card glass-card">
         <div class="stat-top">
           <div class="stat-icon uber-icon"><i class="fa-brands fa-uber"></i></div>
           <div class="stat-badge good">Top 5%</div>
         </div>
-        <div class="stat-val" data-target="4.95" data-decimals="2">0</div>
+        <!-- Arc ring: circumference=163. Fill = (rating/5)*163. 4.95/5 = 161.1 -->
+        <div class="stat-arc-wrap">
+          <svg class="stat-arc" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="30" r="26" stroke="rgba(255,255,255,0.07)" stroke-width="5"/>
+            <circle class="arc-fill arc-uber" cx="30" cy="30" r="26"
+              stroke="url(#uberGrad)" stroke-width="5"
+              stroke-linecap="round"
+              stroke-dasharray="163" stroke-dashoffset="163"
+              data-offset="2" transform="rotate(-90 30 30)"/>
+            <defs>
+              <linearGradient id="uberGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#f7cc6a"/>
+                <stop offset="100%" stop-color="#5dd6f7"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="arc-center">
+            <span class="stat-val" data-target="4.95" data-decimals="2">0</span>
+            <span class="arc-outof">/5</span>
+          </div>
+        </div>
         <div class="stat-lbl">Uber Rating</div>
-        <div class="stat-bar"><div class="stat-fill" style="width:99%"></div></div>
+        <div class="stat-stars" data-rating="4.95"></div>
       </article>
 
+      <!-- Rapido Rating -->
       <article class="stat-card glass-card">
         <div class="stat-top">
           <div class="stat-icon rapido-icon"><i class="fa-solid fa-bolt"></i></div>
           <div class="stat-badge good">Active</div>
         </div>
-        <div class="stat-val" data-target="4.62" data-decimals="2">0</div>
+        <div class="stat-arc-wrap">
+          <svg class="stat-arc" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="30" r="26" stroke="rgba(255,255,255,0.07)" stroke-width="5"/>
+            <circle class="arc-fill arc-rapido" cx="30" cy="30" r="26"
+              stroke="url(#rapidoGrad)" stroke-width="5"
+              stroke-linecap="round"
+              stroke-dasharray="163" stroke-dashoffset="163"
+              data-offset="13" transform="rotate(-90 30 30)"/>
+            <defs>
+              <linearGradient id="rapidoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#ffb400"/>
+                <stop offset="100%" stop-color="#ff6b35"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="arc-center">
+            <span class="stat-val" data-target="4.62" data-decimals="2">0</span>
+            <span class="arc-outof">/5</span>
+          </div>
+        </div>
         <div class="stat-lbl">Rapido Rating</div>
-        <div class="stat-bar"><div class="stat-fill" style="width:92%"></div></div>
+        <div class="stat-stars" data-rating="4.62"></div>
       </article>
 
+      <!-- Total Trips -->
       <article class="stat-card glass-card">
         <div class="stat-top">
           <div class="stat-icon trips-icon"><i class="fa-solid fa-route"></i></div>
           <div class="stat-badge good">& growing</div>
         </div>
-        <div class="stat-val stat-plus" data-target="5000" data-decimals="0">0</div>
+        <div class="stat-arc-wrap">
+          <svg class="stat-arc" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="30" r="26" stroke="rgba(255,255,255,0.07)" stroke-width="5"/>
+            <circle class="arc-fill" cx="30" cy="30" r="26"
+              stroke="url(#tripsGrad)" stroke-width="5"
+              stroke-linecap="round"
+              stroke-dasharray="163" stroke-dashoffset="163"
+              data-offset="33" transform="rotate(-90 30 30)"/>
+            <defs>
+              <linearGradient id="tripsGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#5dd6f7"/>
+                <stop offset="100%" stop-color="#3dd68c"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="arc-center">
+            <span class="stat-val stat-plus" data-target="5000" data-decimals="0">0</span>
+          </div>
+        </div>
         <div class="stat-lbl">Total Trips</div>
-        <div class="stat-bar"><div class="stat-fill" style="width:80%"></div></div>
+        <div class="stat-sub-row"><i class="fa-solid fa-arrow-trend-up"></i> Completed successfully</div>
       </article>
 
+      <!-- Years Experience -->
       <article class="stat-card glass-card">
         <div class="stat-top">
           <div class="stat-icon exp-icon"><i class="fa-solid fa-calendar-check"></i></div>
           <div class="stat-badge good">Expert</div>
         </div>
-        <div class="stat-val stat-plus" data-target="3" data-decimals="0">0</div>
+        <div class="stat-arc-wrap">
+          <svg class="stat-arc" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="30" r="26" stroke="rgba(255,255,255,0.07)" stroke-width="5"/>
+            <circle class="arc-fill" cx="30" cy="30" r="26"
+              stroke="url(#expGrad)" stroke-width="5"
+              stroke-linecap="round"
+              stroke-dasharray="163" stroke-dashoffset="163"
+              data-offset="81" transform="rotate(-90 30 30)"/>
+            <defs>
+              <linearGradient id="expGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#f7cc6a"/>
+                <stop offset="100%" stop-color="#ff6b9d"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="arc-center">
+            <span class="stat-val stat-plus" data-target="3" data-decimals="0">0</span>
+          </div>
+        </div>
         <div class="stat-lbl">Years Experience</div>
-        <div class="stat-bar"><div class="stat-fill" style="width:60%"></div></div>
+        <div class="stat-sub-row"><i class="fa-solid fa-road"></i> Professional driver</div>
       </article>
     </section>
 
@@ -198,19 +278,35 @@
       </div>
 
       <div class="tip-card glass-card">
+
+        <!-- LEFT: Premium QR frame -->
         <div class="tip-left">
-          <div class="tip-qr-wrap">
-            <!-- Editable: Replace with actual UPI QR image -->
-            <img src="assets/upi-qr.jpeg" alt="UPI QR code" class="tip-qr" />
-            <div class="tip-scan-label"><i class="fa-solid fa-qrcode"></i> Scan with any UPI app</div>
+          <div class="tip-qr-outer">
+            <!-- Animated corner decorations -->
+            <div class="qr-corner qr-tl"></div>
+            <div class="qr-corner qr-tr"></div>
+            <div class="qr-corner qr-bl"></div>
+            <div class="qr-corner qr-br"></div>
+            <!-- Scan line animation -->
+            <div class="qr-scan-line"></div>
+            <!-- Actual QR image — white bg so scanner works perfectly -->
+            <!-- Editable: Replace src with your QR image -->
+            <img src="assets/upi-qr.jpeg" alt="UPI QR code — scan to pay" class="tip-qr" />
           </div>
+          <div class="qr-app-icons">
+            <span class="qr-app-pill"><i class="fa-solid fa-p"></i> PhonePe</span>
+            <span class="qr-app-pill"><i class="fa-brands fa-google"></i> Pay</span>
+            <span class="qr-app-pill">Paytm</span>
+          </div>
+          <p class="tip-scan-label"><i class="fa-solid fa-qrcode"></i> Scan with any UPI app</p>
         </div>
 
+        <!-- RIGHT: Pay options -->
         <div class="tip-right">
           <div class="tip-amounts">
             <p class="tip-amounts-label">Quick tip amounts</p>
             <div class="tip-amount-btns">
-              <!-- Editable: Change UPI ID in data-upi attributes -->
+              <!-- Editable: Change UPI ID in data-upi attributes and amounts -->
               <button class="tip-amount" data-upi="7479927726-3@ybl" data-name="Indradev%20Verma" data-amount="10">₹10</button>
               <button class="tip-amount" data-upi="7479927726-3@ybl" data-name="Indradev%20Verma" data-amount="20">₹20</button>
               <button class="tip-amount" data-upi="7479927726-3@ybl" data-name="Indradev%20Verma" data-amount="50">₹50</button>
@@ -221,7 +317,7 @@
           <div class="tip-upi-row">
             <div>
               <p class="upi-label">UPI ID</p>
-              <!-- Editable: Update UPI ID -->
+              <!-- Editable: Update UPI ID text -->
               <p class="upi-val" id="upiId">7479927726-3@ybl</p>
             </div>
             <button class="copy-btn" id="copyUpi" onclick="copyUPI()" aria-label="Copy UPI ID">
@@ -229,14 +325,19 @@
             </button>
           </div>
 
-          <!-- Editable: Update UPI ID in href -->
-          <a class="btn btn-gold btn-full" href="upi://pay?pa=7479927726-3@ybl&pn=Indradev%20Verma&cu=INR">
+          <!-- Working UPI button — tries native UPI deep link, shows fallback if not supported -->
+          <!-- Editable: Update UPI ID in data-upi attribute -->
+          <button class="btn btn-gold btn-full" id="upiPayBtn"
+            data-upi="7479927726-3@ybl"
+            data-name="Indradev Verma"
+            onclick="openUPI(this)">
             <i class="fa-solid fa-indian-rupee-sign"></i> Open UPI App & Pay
-          </a>
+          </button>
+          <p class="upi-fallback-hint" id="upiHint"></p>
 
           <div class="tip-thanks">
             <i class="fa-solid fa-heart-pulse"></i>
-            Your tip motivates better service for every passenger. Thank you for the kindness!
+            Your tip keeps the rides running smooth and the smiles coming. Thank you so much! 🙏
           </div>
         </div>
       </div>

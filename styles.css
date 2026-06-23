@@ -388,12 +388,25 @@ h1, h2, h3 { margin: 0; }
 
 .stat-card {
   border-radius: var(--r-lg);
-  padding: 18px 16px;
+  padding: 16px 14px 18px;
   display: grid;
   gap: 10px;
-  transition: transform 0.2s;
+  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  position: relative;
+  overflow: hidden;
 }
-.stat-card:hover { transform: translateY(-4px); }
+.stat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(247,204,106,0.07), transparent 60%);
+  pointer-events: none;
+}
+.stat-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--border-hi);
+  box-shadow: 0 28px 60px rgba(0,0,0,0.5);
+}
 
 .stat-top {
   display: flex;
@@ -402,52 +415,96 @@ h1, h2, h3 { margin: 0; }
 }
 
 .stat-icon {
-  width: 44px; height: 44px;
-  border-radius: 14px;
+  width: 42px; height: 42px;
+  border-radius: 13px;
   display: grid;
   place-items: center;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
-.uber-icon   { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.12); }
-.rapido-icon { background: rgba(255,180,0,0.12); border: 1px solid rgba(255,180,0,0.2); color: #ffb400; }
-.trips-icon  { background: var(--cyan-soft); border: 1px solid rgba(93,214,247,0.2); color: var(--cyan); }
-.exp-icon    { background: var(--gold-soft); border: 1px solid rgba(247,204,106,0.2); color: var(--gold); }
+.uber-icon   { background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.14); color: #fff; }
+.rapido-icon { background: rgba(255,180,0,0.12); border: 1px solid rgba(255,180,0,0.22); color: #ffb400; }
+.trips-icon  { background: var(--cyan-soft); border: 1px solid rgba(93,214,247,0.22); color: var(--cyan); }
+.exp-icon    { background: var(--gold-soft); border: 1px solid rgba(247,204,106,0.22); color: var(--gold); }
 
 .stat-badge {
   padding: 4px 10px;
   border-radius: 999px;
-  font-size: 0.68rem;
+  font-size: 0.67rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
-.stat-badge.good { background: rgba(61,214,140,0.12); border: 1px solid rgba(61,214,140,0.24); color: var(--green); }
+.stat-badge.good {
+  background: rgba(61,214,140,0.12);
+  border: 1px solid rgba(61,214,140,0.26);
+  color: var(--green);
+}
 
+/* Arc ring */
+.stat-arc-wrap {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  margin: 4px auto 0;
+}
+.stat-arc {
+  width: 90px;
+  height: 90px;
+}
+.arc-fill {
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.arc-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+}
 .stat-val {
-  font-size: clamp(1.6rem, 6vw, 2.2rem);
+  font-size: 1.35rem;
   font-weight: 900;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.04em;
   line-height: 1;
 }
-.stat-plus::after { content: "+"; font-size: 0.7em; opacity: 0.7; }
-
-.stat-lbl { color: var(--muted); font-size: 0.85rem; font-weight: 500; }
-
-.stat-bar {
-  height: 4px;
-  border-radius: 99px;
-  background: rgba(255,255,255,0.07);
-  overflow: hidden;
+.stat-plus::after { content: "+"; font-size: 0.65em; opacity: 0.7; }
+.arc-outof {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--muted);
+  align-self: flex-end;
+  padding-bottom: 3px;
 }
-.stat-fill {
-  height: 100%;
-  border-radius: 99px;
-  background: linear-gradient(90deg, var(--gold), var(--cyan));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+
+.stat-lbl {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: center;
 }
-.reveal.visible .stat-fill { transform: scaleX(1); }
+
+/* Star row under rating cards */
+.stat-stars {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  font-size: 0.75rem;
+  color: var(--gold);
+  min-height: 14px;
+}
+
+/* Sub row under trips/exp */
+.stat-sub-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.stat-sub-row i { color: var(--cyan); font-size: 0.8rem; }
 
 /* ============================================================
    SECTION WRAPPER
@@ -528,31 +585,123 @@ h1, h2, h3 { margin: 0; }
   padding: 20px;
   display: grid;
   gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+/* Ambient glow behind the whole tip card */
+.tip-card::before {
+  content: "";
+  position: absolute;
+  top: -40px; left: -40px; right: -40px; bottom: -40px;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 30%, rgba(247,204,106,0.12), transparent 55%),
+    radial-gradient(ellipse 50% 50% at 80% 70%, rgba(93,214,247,0.10), transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+.tip-left, .tip-right { position: relative; z-index: 1; }
+
+/* ---- QR Outer Frame ---- */
+.tip-qr-outer {
+  position: relative;
+  border-radius: 22px;
+  padding: 14px;
+  /* Multi-layer premium background — NO blurry overlay on the QR itself */
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 50%, rgba(247,204,106,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 60% at 10% 90%, rgba(93,214,247,0.14) 0%, transparent 60%),
+    linear-gradient(145deg, rgba(25,35,60,0.9) 0%, rgba(10,16,30,0.95) 100%);
+  border: 1px solid rgba(247,204,106,0.28);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04),
+    0 20px 50px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
-.tip-qr-wrap {
-  display: grid;
-  gap: 12px;
+/* Animated corner brackets */
+.qr-corner {
+  position: absolute;
+  width: 20px; height: 20px;
+  border-color: var(--gold);
+  border-style: solid;
+  opacity: 0.7;
+  animation: cornerPulse 2.5s ease-in-out infinite;
 }
+.qr-tl { top: 8px;  left: 8px;  border-width: 2px 0 0 2px; border-radius: 4px 0 0 0; }
+.qr-tr { top: 8px;  right: 8px; border-width: 2px 2px 0 0; border-radius: 0 4px 0 0; }
+.qr-bl { bottom: 8px; left: 8px;  border-width: 0 0 2px 2px; border-radius: 0 0 0 4px; }
+.qr-br { bottom: 8px; right: 8px; border-width: 0 2px 2px 0; border-radius: 0 0 4px 0; }
+@keyframes cornerPulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+
+/* Scan line animation — decorative only, doesn't touch QR */
+.qr-scan-line {
+  position: absolute;
+  left: 14px; right: 14px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(93,214,247,0.7), transparent);
+  border-radius: 99px;
+  top: 14px;
+  animation: scanDown 2.8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+@keyframes scanDown {
+  0%   { top: 14px; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: calc(100% - 14px); opacity: 0; }
+}
+
+/* QR image itself — clean white bg, no blur or overlay */
 .tip-qr {
+  display: block;
   width: 100%;
   aspect-ratio: 1;
   object-fit: contain;
-  background: #fff;
-  border-radius: 18px;
+  background: #ffffff;
+  border-radius: 14px;
   padding: 10px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 3; /* always above scan line */
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
 }
+
+/* App pills row */
+.qr-app-icons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.qr-app-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+}
+
 .tip-scan-label {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--muted);
   font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 7px;
+  margin-top: 10px;
 }
+.tip-scan-label i { color: var(--gold); }
 
 .tip-right { display: grid; gap: 16px; }
 
@@ -580,8 +729,14 @@ h1, h2, h3 { margin: 0; }
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
 }
-.tip-amount:hover { background: rgba(247,204,106,0.2); transform: translateY(-2px); }
-.tip-amount:active { transform: scale(0.96); }
+.tip-amount:hover    { background: rgba(247,204,106,0.2); transform: translateY(-2px); }
+.tip-amount:active   { transform: scale(0.96); }
+.tip-amount.selected {
+  background: rgba(247,204,106,0.28);
+  border-color: rgba(247,204,106,0.55);
+  box-shadow: 0 0 0 2px rgba(247,204,106,0.22);
+  color: #ffe390;
+}
 
 .tip-upi-row {
   display: flex;
@@ -618,6 +773,17 @@ h1, h2, h3 { margin: 0; }
   flex-shrink: 0;
 }
 .copy-btn:hover { background: rgba(247,204,106,0.18); transform: scale(1.04); }
+
+.upi-fallback-hint {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.55;
+  min-height: 0;
+  display: none;
+}
+.upi-fallback-hint.show { display: block; }
+.upi-fallback-hint a { color: var(--gold); font-weight: 700; text-decoration: underline; }
 
 .tip-thanks {
   padding: 14px 16px;
