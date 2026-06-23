@@ -3,242 +3,375 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Professional cab driver profile, ratings, contact, reviews, and UPI tipping page." />
-  <meta name="theme-color" content="#0f172a" />
-  <title>Professional Cab Driver | Passenger Welcome</title>
+  <meta name="description" content="Indradev Verma — Professional Cab Driver in Kolkata. Ratings, contact, reviews, and UPI tipping." />
+  <meta name="theme-color" content="#0a0f1e" />
+  <title>Indradev Verma | Professional Cab Driver</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="page-glow page-glow-a"></div>
-  <div class="page-glow page-glow-b"></div>
 
-  <a class="floating-action floating-whatsapp" href="https://wa.me/917479927726" target="_blank" rel="noopener noreferrer" aria-label="Chat with driver on WhatsApp">
+  <!-- ========== PROGRESS BAR ========== -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- ========== BACKGROUND GLOWS ========== -->
+  <div class="glow glow-a"></div>
+  <div class="glow glow-b"></div>
+  <div class="glow glow-c"></div>
+
+  <!-- ========== FLOATING BUTTONS ========== -->
+  <!-- Editable: Change the phone number in href -->
+  <a class="fab fab-wa" href="https://wa.me/917479927726?text=Hi%20Indradev%20bhai%2C%20main%20ek%20ride%20book%20karna%20chahta%20hoon" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
     <i class="fa-brands fa-whatsapp"></i>
     <span>WhatsApp</span>
   </a>
-
-  <a class="floating-action floating-tip" href="#tip" aria-label="Jump to tip section">
-    <i class="fa-solid fa-sparkles"></i>
+  <a class="fab fab-tip" href="#tip" aria-label="Tip Me">
+    <i class="fa-solid fa-heart"></i>
     <span>Tip Me</span>
   </a>
 
-  <main class="page-shell">
-    <section class="hero section-card reveal">
-      <div class="hero-copy">
-        <div class="eyebrow">Trusted ride partner for every trip</div>
-        <h1 class="hero-title">Hi, I’m <span id="driverName">Indradev Verma</span></h1>
-        <p class="hero-subtitle">Professional Cab Driver</p>
-        <p class="hero-meta"><i class="fa-solid fa-location-dot"></i> <span id="driverCity">Kolkata, West Bengal</span></p>
-        <p class="hero-message">Welcome aboard. I focus on safe driving, clean rides, on-time pickup, and a calm professional experience for every passenger.</p>
+  <!-- ========== TOAST NOTIFICATION ========== -->
+  <div class="toast" id="toast">
+    <i class="fa-solid fa-check-circle"></i>
+    <span id="toastMsg">Copied!</span>
+  </div>
 
-        <div class="hero-actions">
-          <a href="tel:+917479927726" class="btn btn-primary"><i class="fa-solid fa-phone"></i> Call Driver</a>
-          <a href="https://wa.me/917479927726?text=Hi%20Indradev,%20I%20need%20a%20cab%20ride" class="btn btn-secondary" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> WhatsApp Driver</a>
+  <main class="shell">
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero glass-card reveal">
+      <div class="hero-copy">
+        <div class="hero-eyebrow">
+          <span class="dot-live"></span>
+          Available for rides in Kolkata
         </div>
 
-        <div class="hero-pill-row">
-          <span class="pill"><i class="fa-solid fa-shield-heart"></i> Verified profile</span>
-          <span class="pill"><i class="fa-solid fa-car-side"></i> Premium cab service</span>
-          <span class="pill"><i class="fa-solid fa-star"></i> Passenger rated</span>
+        <!-- Editable: Change driver name here -->
+        <h1 class="hero-title">Hi, I'm <br><span class="name-gradient" id="driverName">Indradev Verma</span></h1>
+        <p class="hero-role">Professional Cab Driver</p>
+
+        <!-- Editable: Change city here -->
+        <p class="hero-city"><i class="fa-solid fa-location-dot"></i> <span id="driverCity">Kolkata, West Bengal</span></p>
+
+        <p class="hero-msg">Welcome aboard! I focus on safe driving, clean rides, on-time pickup, and a calm professional experience — every single trip.</p>
+
+        <div class="hero-btns">
+          <!-- Editable: Change phone number -->
+          <a href="tel:+917479927726" class="btn btn-gold"><i class="fa-solid fa-phone"></i> Call Driver</a>
+          <a href="https://wa.me/917479927726" class="btn btn-ghost" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+
+        <div class="pills">
+          <span class="pill"><i class="fa-solid fa-shield-heart"></i> Verified</span>
+          <span class="pill"><i class="fa-solid fa-star"></i> Top Rated</span>
+          <span class="pill"><i class="fa-solid fa-car-side"></i> Premium Ride</span>
         </div>
       </div>
 
       <div class="hero-visual">
-        <!-- Editable section: replace the image and text values below with your own driver details. -->
-        <div class="profile-card glass-card">
-          <div class="profile-photo-wrap">
-            <img src="assets/driver-photo.jpeg" alt="Driver profile photo" class="profile-photo" />
+        <!-- Editable: Replace with actual driver photo -->
+        <div class="profile-frame glass-card">
+          <div class="photo-wrap">
+            <img src="assets/driver-photo.jpeg" alt="Indradev Verma — Professional Cab Driver" class="driver-photo" />
+            <div class="photo-badge"><i class="fa-solid fa-circle-check"></i> Verified Driver</div>
           </div>
-          <div class="profile-card-copy">
-            <h2>Premium ride experience</h2>
-            <p>Clean cab, polite service, and quick communication for a stress-free trip.</p>
+          <div class="profile-meta">
+            <p class="profile-meta-title">Premium ride experience</p>
+            <p class="profile-meta-sub">Clean cab · Polite service · On-time</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section-grid reveal" aria-label="Ratings and statistics">
-      <!-- Editable section: update ratings, trip counts, and experience here. -->
+    <!-- ===================== STATS ===================== -->
+    <!-- Editable: Update data-target values for counters -->
+    <section class="stats-grid reveal" aria-label="Ratings and statistics">
       <article class="stat-card glass-card">
-        <div class="stat-icon"><i class="fa-brands fa-uber"></i></div>
-        <div class="stat-value">4.95</div>
-        <div class="stat-label">Uber Rating</div>
+        <div class="stat-top">
+          <div class="stat-icon uber-icon"><i class="fa-brands fa-uber"></i></div>
+          <div class="stat-badge good">Top 5%</div>
+        </div>
+        <div class="stat-val" data-target="4.95" data-decimals="2">0</div>
+        <div class="stat-lbl">Uber Rating</div>
+        <div class="stat-bar"><div class="stat-fill" style="width:99%"></div></div>
       </article>
+
       <article class="stat-card glass-card">
-        <div class="stat-icon"><i class="fa-solid fa-bolt"></i></div>
-        <div class="stat-value">4.62</div>
-        <div class="stat-label">Rapido Rating</div>
+        <div class="stat-top">
+          <div class="stat-icon rapido-icon"><i class="fa-solid fa-bolt"></i></div>
+          <div class="stat-badge good">Active</div>
+        </div>
+        <div class="stat-val" data-target="4.62" data-decimals="2">0</div>
+        <div class="stat-lbl">Rapido Rating</div>
+        <div class="stat-bar"><div class="stat-fill" style="width:92%"></div></div>
       </article>
+
       <article class="stat-card glass-card">
-        <div class="stat-icon"><i class="fa-solid fa-route"></i></div>
-        <div class="stat-value">5K+</div>
-        <div class="stat-label">Total Trips</div>
+        <div class="stat-top">
+          <div class="stat-icon trips-icon"><i class="fa-solid fa-route"></i></div>
+          <div class="stat-badge good">& growing</div>
+        </div>
+        <div class="stat-val stat-plus" data-target="5000" data-decimals="0">0</div>
+        <div class="stat-lbl">Total Trips</div>
+        <div class="stat-bar"><div class="stat-fill" style="width:80%"></div></div>
       </article>
+
       <article class="stat-card glass-card">
-        <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
-        <div class="stat-value">3+</div>
-        <div class="stat-label">Years Experience</div>
+        <div class="stat-top">
+          <div class="stat-icon exp-icon"><i class="fa-solid fa-calendar-check"></i></div>
+          <div class="stat-badge good">Expert</div>
+        </div>
+        <div class="stat-val stat-plus" data-target="3" data-decimals="0">0</div>
+        <div class="stat-lbl">Years Experience</div>
+        <div class="stat-bar"><div class="stat-fill" style="width:60%"></div></div>
       </article>
     </section>
 
-    <section class="content-section reveal">
-      <div class="section-heading">
-        <span class="eyebrow">About driver</span>
-        <h2>Reliable, courteous, and focused on safety</h2>
+    <!-- ===================== ABOUT ===================== -->
+    <section class="section reveal">
+      <div class="sec-head">
+        <span class="eyebrow">About the driver</span>
+        <h2>Reliable, courteous & safety-focused</h2>
       </div>
 
-      <div class="info-grid">
-        <!-- Editable section: replace this content with the driver's real profile summary. -->
-        <article class="glass-card info-card">
-          <i class="fa-solid fa-id-card info-icon"></i>
+      <!-- Editable: Update driver details in each card -->
+      <div class="about-grid">
+        <article class="about-card glass-card">
+          <div class="about-icon"><i class="fa-solid fa-id-card"></i></div>
           <h3>Experience</h3>
-          <p>3+ years of professional city driving with a strong record of punctual and smooth rides.</p>
+          <p>3+ years of professional city driving with a strong record of punctual and smooth rides across Kolkata.</p>
         </article>
-        <article class="glass-card info-card">
-          <i class="fa-solid fa-language info-icon"></i>
+        <article class="about-card glass-card">
+          <div class="about-icon"><i class="fa-solid fa-language"></i></div>
           <h3>Languages Spoken</h3>
-          <p>Hindi and basic English for easy passenger communication.</p>
+          <p>Hindi and basic English — easy, clear communication for every passenger without any language barrier.</p>
         </article>
-        <article class="glass-card info-card">
-          <i class="fa-solid fa-gauge-high info-icon"></i>
+        <article class="about-card glass-card">
+          <div class="about-icon"><i class="fa-solid fa-gauge-high"></i></div>
           <h3>Driving Style</h3>
-          <p>Calm, smooth, and efficient driving with careful lane discipline and clean braking.</p>
+          <p>Calm, smooth, and efficient — careful lane discipline, gentle braking, no sudden moves for a comfortable trip.</p>
         </article>
-        <article class="glass-card info-card">
-          <i class="fa-solid fa-shield-halved info-icon"></i>
+        <article class="about-card glass-card">
+          <div class="about-icon"><i class="fa-solid fa-shield-halved"></i></div>
           <h3>Safety Commitment</h3>
-          <p>Seat belts, GPS route awareness, vehicle checks, and passenger comfort are always priority one.</p>
+          <p>Seat belts, GPS route awareness, regular vehicle checks, and passenger comfort are always the top priority.</p>
         </article>
       </div>
     </section>
 
-    <section class="content-section reveal" id="contact">
-      <div class="section-heading">
+    <!-- ===================== CONTACT ===================== -->
+    <section class="section reveal" id="contact">
+      <div class="sec-head">
         <span class="eyebrow">Contact</span>
         <h2>Reach out instantly</h2>
       </div>
 
       <div class="contact-grid">
-          <a class="contact-button glass-card" href="tel:+917479927726">
-          <i class="fa-solid fa-phone"></i>
-          <span>Call Driver</span>
-          <small>Immediate phone support</small>
+        <!-- Editable: Change phone number -->
+        <a class="contact-card glass-card" href="tel:+917479927726">
+          <div class="contact-icon call-icon"><i class="fa-solid fa-phone"></i></div>
+          <div class="contact-info">
+            <span>Call Driver</span>
+            <small>Immediate phone support</small>
+          </div>
+          <i class="fa-solid fa-chevron-right contact-arrow"></i>
         </a>
-          <a class="contact-button glass-card" href="https://wa.me/917479927726?text=Hi%20Indradev,%20I%20am%20looking%20for%20a%20ride" target="_blank" rel="noopener noreferrer">
-          <i class="fa-brands fa-whatsapp"></i>
-          <span>WhatsApp Driver</span>
-          <small>Fast trip coordination</small>
+        <a class="contact-card glass-card" href="https://wa.me/917479927726?text=Hi%20Indradev%20bhai%2C%20main%20ek%20ride%20book%20karna%20chahta%20hoon" target="_blank" rel="noopener noreferrer">
+          <div class="contact-icon wa-icon"><i class="fa-brands fa-whatsapp"></i></div>
+          <div class="contact-info">
+            <span>WhatsApp Driver</span>
+            <small>Fast trip coordination</small>
+          </div>
+          <i class="fa-solid fa-chevron-right contact-arrow"></i>
         </a>
       </div>
     </section>
 
-    <section class="content-section reveal" id="tip">
-      <div class="section-heading">
-        <span class="eyebrow">Tip driver</span>
-        <h2>Support with a tip</h2>
+    <!-- ===================== TIP ===================== -->
+    <section class="section reveal" id="tip">
+      <div class="sec-head">
+        <span class="eyebrow">Tip Driver</span>
+        <h2>Support with a tip ❤️</h2>
       </div>
 
-      <div class="tip-layout">
-        <article class="glass-card tip-card">
-          <div class="tip-header">
-            <div>
-              <span class="eyebrow">PhonePe accepted here</span>
-              <h3>Scan & pay using your preferred UPI app</h3>
-            </div>
-            <div class="tip-mini-badge"><i class="fa-solid fa-qrcode"></i> Secure scan</div>
-          </div>
+      <div class="tip-card glass-card">
+        <div class="tip-left">
           <div class="tip-qr-wrap">
-            <!-- Editable section: replace the QR SVG with your actual UPI QR image later. -->
-            <img src="assets/upi-qr.jpeg" alt="PhonePe UPI QR code" class="tip-qr" />
+            <!-- Editable: Replace with actual UPI QR image -->
+            <img src="assets/upi-qr.jpeg" alt="UPI QR code" class="tip-qr" />
+            <div class="tip-scan-label"><i class="fa-solid fa-qrcode"></i> Scan with any UPI app</div>
           </div>
-          <div class="tip-copy">
-            <p class="tip-label">UPI ID</p>
-            <p class="tip-value">7479927726-3@ybl</p>
-            <a class="btn btn-primary btn-wide" href="upi://pay?pa=7479927726-3@ybl&pn=Indradev%20Verma&cu=INR">
-              <i class="fa-solid fa-indian-rupee-sign"></i> Support with a Tip
-            </a>
-            <p class="tip-thanks">Thank you for appreciating professional service. Your support means a lot.</p>
+        </div>
+
+        <div class="tip-right">
+          <div class="tip-amounts">
+            <p class="tip-amounts-label">Quick tip amounts</p>
+            <div class="tip-amount-btns">
+              <!-- Editable: Change UPI ID in data-upi attributes -->
+              <button class="tip-amount" data-upi="7479927726-3@ybl" data-name="Indradev%20Verma" data-amount="10">₹10</button>
+              <button class="tip-amount" data-upi="7479927726-3@ybl" data-name="Indradev%20Verma" data-amount="20">₹20</button>
+              <button class="tip-amount" data-upi="7479927726-3@ybl" data-name="Indradev%20Verma" data-amount="50">₹50</button>
+              <button class="tip-amount" data-upi="7479927726-3@ybl" data-name="Indradev%20Verma" data-amount="100">₹100</button>
+            </div>
           </div>
-        </article>
+
+          <div class="tip-upi-row">
+            <div>
+              <p class="upi-label">UPI ID</p>
+              <!-- Editable: Update UPI ID -->
+              <p class="upi-val" id="upiId">7479927726-3@ybl</p>
+            </div>
+            <button class="copy-btn" id="copyUpi" onclick="copyUPI()" aria-label="Copy UPI ID">
+              <i class="fa-regular fa-copy"></i> Copy
+            </button>
+          </div>
+
+          <!-- Editable: Update UPI ID in href -->
+          <a class="btn btn-gold btn-full" href="upi://pay?pa=7479927726-3@ybl&pn=Indradev%20Verma&cu=INR">
+            <i class="fa-solid fa-indian-rupee-sign"></i> Open UPI App & Pay
+          </a>
+
+          <div class="tip-thanks">
+            <i class="fa-solid fa-heart-pulse"></i>
+            Your tip motivates better service for every passenger. Thank you for the kindness!
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="content-section reveal">
-      <div class="section-heading">
+    <!-- ===================== SOCIAL ===================== -->
+    <section class="section reveal">
+      <div class="sec-head">
         <span class="eyebrow">Social</span>
         <h2>Find the driver online</h2>
       </div>
 
+      <!-- Editable: Update social media links -->
       <div class="social-grid">
-        <a class="social-card glass-card" href="https://www.instagram.com/itz_indradev?igsh=NTlxY2hxY2lyNDhv" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <a class="social-card glass-card instagram" href="https://www.instagram.com/itz_indradev?igsh=NTlxY2hxY2lyNDhv" target="_blank" rel="noopener noreferrer">
           <i class="fa-brands fa-instagram"></i>
           <span>Instagram</span>
+          <small>@itz_indradev</small>
         </a>
-        <a class="social-card glass-card" href="#" aria-label="Facebook">
+        <a class="social-card glass-card facebook" href="#" target="_blank" rel="noopener noreferrer">
           <i class="fa-brands fa-facebook-f"></i>
           <span>Facebook</span>
+          <small>Add your link</small>
         </a>
-        <a class="social-card glass-card" href="#" aria-label="YouTube">
+        <a class="social-card glass-card youtube" href="#" target="_blank" rel="noopener noreferrer">
           <i class="fa-brands fa-youtube"></i>
           <span>YouTube</span>
+          <small>Add your link</small>
         </a>
-        <a class="social-card glass-card" href="#" aria-label="LinkedIn">
+        <a class="social-card glass-card linkedin" href="#" target="_blank" rel="noopener noreferrer">
           <i class="fa-brands fa-linkedin-in"></i>
           <span>LinkedIn</span>
+          <small>Add your link</small>
         </a>
       </div>
     </section>
 
-    <section class="content-section reveal">
-      <div class="section-heading">
+    <!-- ===================== REVIEWS ===================== -->
+    <section class="section reveal">
+      <div class="sec-head">
         <span class="eyebrow">Passenger reviews</span>
         <h2>What riders say</h2>
       </div>
 
-      <div class="review-grid">
-          <article class="glass-card review-card">
-          <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-          <h3>Arpita D.</h3>
-          <p>Very polite, punctual, and smooth driving. The cab was clean and the whole ride felt premium.</p>
+      <!-- Editable: Add or modify reviews here -->
+      <div class="reviews-grid">
+        <article class="review-card glass-card">
+          <div class="review-top">
+            <div class="reviewer-avatar">A</div>
+            <div>
+              <h3>Arpita D.</h3>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p>"Very polite, punctual, and smooth driving. The cab was clean and the whole ride felt premium. Would always prefer Indradev bhai!"</p>
+          <div class="review-platform"><i class="fa-brands fa-uber"></i> Uber</div>
         </article>
-        <article class="glass-card review-card">
-          <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-          <h3>Rahul S.</h3>
-          <p>Excellent communication and safe driving in traffic. I felt comfortable throughout the trip.</p>
+
+        <article class="review-card glass-card">
+          <div class="review-top">
+            <div class="reviewer-avatar r">R</div>
+            <div>
+              <h3>Rahul S.</h3>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p>"Excellent communication and safe driving through Kolkata traffic. I felt comfortable throughout. Highly recommended!"</p>
+          <div class="review-platform"><i class="fa-solid fa-bolt"></i> Rapido</div>
         </article>
-        <article class="glass-card review-card">
-          <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-          <h3>Neha M.</h3>
-          <p>Professional service with a calm attitude. Definitely one of the best cab experiences I have had.</p>
+
+        <article class="review-card glass-card">
+          <div class="review-top">
+            <div class="reviewer-avatar n">N</div>
+            <div>
+              <h3>Neha M.</h3>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p>"Professional service with a calm attitude. He made sure I reached on time and felt safe. Definitely one of the best!"</p>
+          <div class="review-platform"><i class="fa-brands fa-uber"></i> Uber</div>
         </article>
       </div>
     </section>
 
-    <section class="content-section reveal">
-      <div class="section-heading">
+    <!-- ===================== TRUST BADGES ===================== -->
+    <section class="section reveal">
+      <div class="sec-head">
         <span class="eyebrow">Trust badges</span>
         <h2>Why passengers feel safe</h2>
       </div>
 
-      <div class="badge-grid">
-        <div class="trust-badge glass-card"><i class="fa-solid fa-circle-check"></i><span>Verified Driver</span></div>
-        <div class="trust-badge glass-card"><i class="fa-solid fa-shield-heart"></i><span>Safe Driving</span></div>
-        <div class="trust-badge glass-card"><i class="fa-solid fa-award"></i><span>Professional Service</span></div>
-        <div class="trust-badge glass-card"><i class="fa-solid fa-face-smile"></i><span>Customer Friendly</span></div>
+      <div class="badges-grid">
+        <div class="badge-card glass-card">
+          <div class="badge-icon"><i class="fa-solid fa-circle-check"></i></div>
+          <span>Verified Driver</span>
+        </div>
+        <div class="badge-card glass-card">
+          <div class="badge-icon"><i class="fa-solid fa-shield-heart"></i></div>
+          <span>Safe Driving</span>
+        </div>
+        <div class="badge-card glass-card">
+          <div class="badge-icon"><i class="fa-solid fa-award"></i></div>
+          <span>Professional Service</span>
+        </div>
+        <div class="badge-card glass-card">
+          <div class="badge-icon"><i class="fa-solid fa-face-smile"></i></div>
+          <span>Passenger Friendly</span>
+        </div>
       </div>
     </section>
 
-    <section class="thank-you reveal">
-      <div class="glass-card thank-you-card">
+    <!-- ===================== THANK YOU ===================== -->
+    <section class="section reveal">
+      <div class="thankyou-card glass-card">
+        <div class="thankyou-icon"><i class="fa-solid fa-star"></i></div>
         <span class="eyebrow">Thank you</span>
-        <h2>Thank you for choosing this ride</h2>
-        <p>Your comfort, time, and safety matter. Wishing you a pleasant journey and a great day ahead.</p>
+        <!-- Editable: Update driver name in heading -->
+        <h2>Thank you for riding with Indradev</h2>
+        <p>Your comfort, time, and safety always come first. Wishing you a safe journey and a wonderful day ahead. Do leave a rating — it means the world! 🙏</p>
+        <div class="thankyou-actions">
+          <a href="tel:+917479927726" class="btn btn-gold"><i class="fa-solid fa-phone"></i> Book Again</a>
+          <a href="#tip" class="btn btn-ghost"><i class="fa-solid fa-heart"></i> Leave a Tip</a>
+        </div>
       </div>
     </section>
+
   </main>
 
   <script src="script.js"></script>
