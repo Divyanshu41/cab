@@ -1,412 +1,295 @@
 /* ============================================================
-
-DIbu
-
-   CAB DRIVER PROFILE — script.js
-   Features: scroll reveal, arc counters, star ratings,
-             copy UPI, tip amount buttons, working UPI pay,
-             smooth scroll, progress bar
+   CAB DRIVER PROFILE - Firebase Reviews System
+   Real-time updates, live rating calculation
    ============================================================ */
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+let selectedRating = 5;
+let selectedPlatform = 'Uber';
+let allReviews = [];
+const DRIVER_ID = 'indradev-kolkata'; // Editable: Change for other drivers
 
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyA-TtB1x3T23NIxJgtzvqNEF6ImYxri678",
-  authDomain: "driver-profile-32113.firebaseapp.com",
-  projectId: "driver-profile-32113",
-  storageBucket: "driver-profile-32113.firebasestorage.app",
-  messagingSenderId: "1090303942049",
-  appId: "1:1090303942049:web:33acaae837fbfc3ee9bfe0",
-  measurementId: "G-WLEE9C6JE0"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-
-
-
-
-
-/* ---------- SCROLL REVEAL ---------- */
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-);
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-/* ---------- ANIMATE NUMBER COUNTER ---------- */
-function animateCounter(el) {
-  const target   = parseFloat(el.dataset.target);
-  const decimals = parseInt(el.dataset.decimals, 10) || 0;
-  const duration = 1600;
-  const start    = performance.now();
-
-  function step(now) {
-    const progress = Math.min((now - start) / duration, 1);
-    const ease     = 1 - Math.pow(1 - progress, 3);
-    const value    = target * ease;
-    if (decimals > 0) {
-      el.textContent = value.toFixed(decimals);
-    } else {
-      const rounded = Math.round(value);
-      el.textContent = rounded >= 1000 ? (Math.floor(rounded / 100) / 10) + 'K' : rounded;
-    }
-    if (progress < 1) requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
-
-/* ---------- ARC RING ANIMATION ---------- */
-// SVG circle circumference at r=26: 2 * PI * 26 ≈ 163.36
-const CIRCUMFERENCE = 2 * Math.PI * 26;
-
-function animateArc(circle) {
-  const targetOffset = parseFloat(circle.dataset.offset);
-  // stroke-dashoffset starts at 163 (empty), animate to targetOffset
-  setTimeout(() => {
-    circle.style.strokeDashoffset = targetOffset;
-  }, 200);
-}
-
-/* ---------- RENDER STARS ---------- */
-function renderStars(container, rating) {
-  const full    = Math.floor(rating);
-  const hasHalf = (rating - full) >= 0.4;
-  let html = '';
-  for (let i = 1; i <= 5; i++) {
-    if (i <= full) {
-      html += '<i class="fa-solid fa-star"></i>';
-    } else if (i === full + 1 && hasHalf) {
-      html += '<i class="fa-solid fa-star-half-stroke"></i>';
-    } else {
-      html += '<i class="fa-regular fa-star"></i>';
-    }
-  }
-  container.innerHTML = html;
-}
-
-/* ---------- TRIGGER STAT ANIMATIONS ON SCROLL ---------- */
-const statsSection = document.querySelector('.stats-grid');
-if (statsSection) {
-  const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        // Number counters
-        entry.target.querySelectorAll('.stat-val[data-target]').forEach(animateCounter);
-        // Arc rings
-        entry.target.querySelectorAll('.arc-fill[data-offset]').forEach(animateArc);
-        // Stars
-        entry.target.querySelectorAll('.stat-stars[data-rating]').forEach(el => {
-          renderStars(el, parseFloat(el.dataset.rating));
-        });
-        statsObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.25 });
-  statsObserver.observe(statsSection);
-}
-
-/* ---------- SCROLL PROGRESS BAR ---------- */
-const progressBar = document.getElementById('progressBar');
-function updateProgress() {
-  const scrollTop  = window.scrollY;
-  const docHeight  = document.documentElement.scrollHeight - window.innerHeight;
-  const pct        = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-  if (progressBar) progressBar.style.width = pct + '%';
-}
-window.addEventListener('scroll', updateProgress, { passive: true });
-
-/* ---------- SMOOTH SCROLL ---------- */
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', (e) => {
-    const id = anchor.getAttribute('href');
-    if (!id || id === '#') return;
-    const target = document.querySelector(id);
-    if (!target) return;
-    e.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
+/* ---------- INITIALIZATION ---------- */
+document.addEventListener('DOMContentLoaded', () => {
+  initializeReviewSystem();
+  setupStarPicker();
+  setupCharCounter();
+  setupFormSubmit();
+  setupModalClose();
 });
 
-/* ---------- TOAST ---------- */
-let toastTimer = null;
-function showToast(msg, icon = '✅') {
-  const toast = document.getElementById('toast');
-  const msgEl = document.getElementById('toastMsg');
-  if (!toast || !msgEl) return;
-  msgEl.textContent = msg;
-  toast.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+/* ---------- MODAL MANAGEMENT ---------- */
+function openReviewModal() {
+  const modal = document.getElementById('reviewModal');
+  modal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+  resetReviewForm();
 }
 
-/* ---------- COPY UPI ---------- */
-window.copyUPI = function () {
-  const upiEl = document.getElementById('upiId');
-  if (!upiEl) return;
-  const upi = upiEl.textContent.trim();
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(upi)
-      .then(() => showToast('UPI ID copied! 🎉'))
-      .catch(() => fallbackCopy(upi));
-  } else {
-    fallbackCopy(upi);
+function closeReviewModal() {
+  const modal = document.getElementById('reviewModal');
+  modal.classList.remove('show');
+  document.body.style.overflow = 'auto';
+}
+
+function setupModalClose() {
+  const overlay = document.getElementById('reviewModal');
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeReviewModal();
+  });
+}
+
+/* ---------- STAR PICKER ---------- */
+function setupStarPicker() {
+  const starBtns = document.querySelectorAll('.star-btn');
+  const ratingInput = document.getElementById('selectedRating');
+  const ratingLabel = document.getElementById('ratingLabel');
+  const labels = ['Poor', 'Fair', 'Good', 'Very Good', 'Excellent!'];
+
+  starBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedRating = parseInt(btn.dataset.rating, 10);
+      ratingInput.value = selectedRating;
+
+      starBtns.forEach((b, i) => {
+        b.classList.toggle('active', i < selectedRating);
+      });
+
+      ratingLabel.textContent = labels[selectedRating - 1];
+    });
+  });
+
+  // Set default to 5 stars
+  starBtns[4].click();
+}
+
+/* ---------- CHAR COUNTER ---------- */
+function setupCharCounter() {
+  const textarea = document.getElementById('reviewMessage');
+  const counter = document.getElementById('charCount');
+
+  textarea.addEventListener('input', () => {
+    counter.textContent = textarea.value.length;
+  });
+}
+
+/* ---------- FORM SUBMISSION ---------- */
+function setupFormSubmit() {
+  const form = document.getElementById('reviewForm');
+  form.addEventListener('submit', submitReview);
+}
+
+async function submitReview(e) {
+  e.preventDefault();
+
+  const nameInput = document.getElementById('reviewName');
+  const platformInput = document.getElementById('reviewPlatform');
+  const messageInput = document.getElementById('reviewMessage');
+  const submitBtn = document.getElementById('submitBtn');
+  const form = document.getElementById('reviewForm');
+  const loadingState = document.getElementById('loadingState');
+  const successState = document.getElementById('successState');
+
+  const name = nameInput.value.trim();
+  const platform = platformInput.value;
+  const message = messageInput.value.trim();
+
+  if (!name || !platform) {
+    alert('Please fill in all required fields');
+    return;
   }
-};
-function fallbackCopy(text) {
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0;width:1px;height:1px';
-  document.body.appendChild(ta);
-  ta.select();
-  try { document.execCommand('copy'); showToast('UPI ID copied! 🎉'); }
-  catch { showToast('Please copy manually: ' + text); }
-  document.body.removeChild(ta);
-}
 
-/* ---------- WORKING UPI PAY BUTTON ---------- */
-// How it works:
-// 1. Try native upi:// deep link — opens installed UPI apps (PhonePe, GPay, Paytm etc.)
-// 2. If browser blocks it, try intent:// for Android Chrome
-// 3. If still nothing, show a helpful hint with manual instructions
-window.openUPI = function (btn) {
-  const upiId   = btn.dataset.upi;
-  const name    = btn.dataset.name || 'Driver';
-  const hint    = document.getElementById('upiHint');
-  const amount  = ''; // no amount preset — user chooses in their app
+  // Show loading state
+  submitBtn.disabled = true;
+  form.style.display = 'none';
+  loadingState.style.display = 'grid';
 
-  const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(name)}&cu=INR`;
+  try {
+    // Submit to Firebase
+    await window.db.collection('reviews').add({
+      driverId: DRIVER_ID,
+      name: name,
+      platform: platform,
+      stars: selectedRating,
+      message: message,
+      timestamp: new Date()
+    });
 
-  // For Android: intent:// gives better app chooser
-  const intentUrl = `intent://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(name)}&cu=INR#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end`;
+    // Success state
+    loadingState.style.display = 'none';
+    successState.style.display = 'grid';
 
-  const isAndroid = /android/i.test(navigator.userAgent);
-  const isIOS     = /iphone|ipad|ipod/i.test(navigator.userAgent);
-
-  showToast('Opening your UPI app…');
-
-  if (isAndroid) {
-    // Try upi:// first, fall back to intent://
-    const iframe = document.createElement('iframe');
-    iframe.style.cssText = 'display:none;width:0;height:0;border:0';
-    document.body.appendChild(iframe);
-    iframe.src = upiUrl;
-
-    // If app didn't open after 1.5s, show hint
-    let opened = false;
-    const handleVisibility = () => { if (document.hidden) opened = true; };
-    document.addEventListener('visibilitychange', handleVisibility, { once: true });
-
+    // Auto-close after 2 seconds
     setTimeout(() => {
-      document.removeEventListener('visibilitychange', handleVisibility);
-      document.body.removeChild(iframe);
-      if (!opened) {
-        // Try intent:// as fallback
-        window.location.href = intentUrl;
-        if (hint) {
-          hint.innerHTML = 'If no app opened, copy the UPI ID and paste it in your preferred app.';
-          hint.classList.add('show');
-        }
-      }
-    }, 1500);
-
-  } else if (isIOS) {
-    // iOS: direct upi:// link works if app is installed
-    window.location.href = upiUrl;
-    if (hint) {
-      setTimeout(() => {
-        hint.innerHTML = `If the app didn't open, open <strong>PhonePe / GPay / Paytm</strong> manually and pay to: <a href="javascript:void(0)" onclick="copyUPI()">${upiId}</a>`;
-        hint.classList.add('show');
-      }, 1800);
-    }
-
-  } else {
-    // Desktop browser — UPI deep links don't work, show QR hint
-    window.location.href = upiUrl; // still try
-    if (hint) {
-      hint.innerHTML = `On desktop, use your phone to scan the QR code above, or open your UPI app and pay to: <strong>${upiId}</strong>`;
-      hint.classList.add('show');
-    }
+      closeReviewModal();
+    }, 2000);
+  } catch (error) {
+    console.error('Error submitting review:', error);
+    alert('Error submitting review: ' + error.message);
+    
+    // Reset form
+    loadingState.style.display = 'none';
+    form.style.display = 'grid';
+    submitBtn.disabled = false;
   }
-};
+}
 
-/* ---------- TIP AMOUNT BUTTONS ---------- */
-document.querySelectorAll('.tip-amount').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const upi    = btn.dataset.upi;
-    const name   = btn.dataset.name || 'Driver';
-    const amount = btn.dataset.amount;
-    if (!upi || !amount) return;
+function resetReviewForm() {
+  document.getElementById('reviewForm').style.display = 'grid';
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('successState').style.display = 'none';
 
-    const upiUrl    = `upi://pay?pa=${encodeURIComponent(upi)}&pn=${encodeURIComponent(decodeURIComponent(name))}&am=${amount}&cu=INR`;
-    const intentUrl = `intent://pay?pa=${encodeURIComponent(upi)}&pn=${encodeURIComponent(decodeURIComponent(name))}&am=${amount}&cu=INR#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end`;
-    const hint      = document.getElementById('upiHint');
+  document.getElementById('reviewName').value = '';
+  document.getElementById('reviewMessage').value = '';
+  document.getElementById('reviewPlatform').value = 'Uber';
+  document.getElementById('charCount').textContent = '0';
+  selectedRating = 5;
+  selectedPlatform = 'Uber';
 
-    // Highlight selected amount
-    document.querySelectorAll('.tip-amount').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
+  // Reset stars
+  document.querySelectorAll('.star-btn')[4].click();
+}
 
-    showToast(`Opening UPI for ₹${amount} tip…`);
+/* ============================================================
+   FIREBASE REAL-TIME REVIEWS
+   ============================================================ */
 
-    const isAndroid = /android/i.test(navigator.userAgent);
-    if (isAndroid) {
-      const iframe = document.createElement('iframe');
-      iframe.style.cssText = 'display:none;width:0;height:0;border:0';
-      document.body.appendChild(iframe);
-      iframe.src = upiUrl;
-      let opened = false;
-      const handleVis = () => { if (document.hidden) opened = true; };
-      document.addEventListener('visibilitychange', handleVis, { once: true });
-      setTimeout(() => {
-        document.removeEventListener('visibilitychange', handleVis);
-        document.body.removeChild(iframe);
-        if (!opened) window.location.href = intentUrl;
-      }, 1500);
-    } else {
-      window.location.href = upiUrl;
-      if (hint) {
-        setTimeout(() => {
-          hint.innerHTML = `If no app opened, copy UPI ID <strong>${upi}</strong> and pay ₹${amount} manually.`;
-          hint.classList.add('show');
-        }, 1800);
+function initializeReviewSystem() {
+  if (!window.db) {
+    console.error('Firebase not initialized');
+    return;
+  }
+
+  const reviewsLoading = document.getElementById('reviewsLoading');
+  const reviewGrid = document.getElementById('reviewGrid');
+  const reviewsEmpty = document.getElementById('reviewsEmpty');
+  const ratingBanner = document.getElementById('ratingBanner');
+
+  // Show loading
+  reviewsLoading.style.display = 'grid';
+
+  // Real-time listener
+  window.db
+    .collection('reviews')
+    .where('driverId', '==', DRIVER_ID)
+    .orderBy('timestamp', 'desc')
+    .onSnapshot(
+      (snapshot) => {
+        allReviews = [];
+        
+        snapshot.forEach((doc) => {
+          allReviews.push({
+            id: doc.id,
+            ...doc.data()
+          });
+        });
+
+        reviewsLoading.style.display = 'none';
+
+        if (allReviews.length === 0) {
+          reviewsEmpty.style.display = 'grid';
+          reviewGrid.style.display = 'none';
+          ratingBanner.style.display = 'none';
+        } else {
+          reviewsEmpty.style.display = 'none';
+          reviewGrid.style.display = 'grid';
+          ratingBanner.style.display = 'grid';
+          
+          renderReviews();
+          updateRatingBanner();
+        }
+      },
+      (error) => {
+        console.error('Error loading reviews:', error);
+        reviewsLoading.innerHTML = '<p style="color:var(--muted)">Error loading reviews. Check console.</p>';
       }
-    }
-  });
-});
-
-/* ---------- FLOATING BUTTONS FADE ON SCROLL ---------- */
-let lastScroll = 0;
-const fabs = document.querySelectorAll('.fab');
-window.addEventListener('scroll', () => {
-  const current = window.scrollY;
-  fabs.forEach(f => {
-    f.style.opacity = (current > lastScroll && current > 200) ? '0.45' : '1';
-    f.style.transition = 'opacity 0.3s';
-  });
-  lastScroll = current;
-}, { passive: true });
-
-
-
-/* ===========================
-   FIREBASE REVIEWS
-=========================== */
-
-async function loadReviews() {
-
-  const container =
-    document.getElementById("reviewsContainer");
-
-  if (!container) return;
-
-  container.innerHTML = "";
-
-  const snapshot =
-    await getDocs(
-      collection(db, "reviews")
     );
+}
 
-  let totalRating = 0;
-  let totalReviews = 0;
+/* ---------- RENDER REVIEWS ---------- */
+function renderReviews() {
+  const reviewGrid = document.getElementById('reviewGrid');
 
-  snapshot.forEach((doc) => {
+  reviewGrid.innerHTML = allReviews.map((review) => {
+    const timestamp = review.timestamp?.toDate 
+      ? review.timestamp.toDate() 
+      : new Date(review.timestamp);
+    
+    const timeAgo = getTimeAgo(timestamp);
+    const starsHtml = renderStars(review.stars);
+    const platformIcon = getPlatformIcon(review.platform);
 
-    const review = doc.data();
-
-    totalRating += review.rating;
-    totalReviews++;
-
-    container.innerHTML += `
-      <article class="review-card glass-card">
-        <div class="review-top">
-          <div class="reviewer-avatar">
-            ${review.name.charAt(0)}
-          </div>
-
-          <div>
-            <h3>${review.name}</h3>
-
-            <div class="stars">
-              ${'<i class="fa-solid fa-star"></i>'.repeat(review.rating)}
-            </div>
-          </div>
+    return `
+      <article class="glass-card review-card">
+        <div class="stars">${starsHtml}</div>
+        <div style="display: flex; gap: 8px; align-items: center; justify-content: space-between;">
+          <h3>${escapeHtml(review.name)}</h3>
+          <span class="platform-tag">${platformIcon} ${review.platform}</span>
         </div>
-
-        <p>${review.comment}</p>
-
+        ${review.message ? `<p>"${escapeHtml(review.message)}"</p>` : ''}
+        <div class="time-ago">${timeAgo}</div>
       </article>
     `;
-  });
-
-  if (totalReviews > 0) {
-
-    const avg =
-      (totalRating / totalReviews)
-      .toFixed(1);
-
-    console.log(
-      "Average Rating:",
-      avg
-    );
-  }
+  }).join('');
 }
 
-loadReviews();
-
-document
-.getElementById("submitReview")
-?.addEventListener(
-  "click",
-  async () => {
-
-    const name =
-      document.getElementById("reviewName").value;
-
-    const rating =
-      Number(
-        document.getElementById("reviewRating").value
-      );
-
-    const comment =
-      document.getElementById("reviewComment").value;
-
-    if (!name || !comment) {
-      alert("Please fill all fields");
-      return;
-    }
-
-    await addDoc(
-      collection(db, "reviews"),
-      {
-        name,
-        rating,
-        comment,
-        createdAt: new Date()
-      }
-    );
-
-    alert("Review Submitted ✅");
-
-    document.getElementById("reviewName").value = "";
-    document.getElementById("reviewComment").value = "";
-
-    loadReviews();
+function renderStars(rating) {
+  let html = '';
+  for (let i = 1; i <= 5; i++) {
+    html += i <= rating 
+      ? '<i class="fa-solid fa-star"></i>' 
+      : '<i class="fa-regular fa-star"></i>';
   }
-);
+  return html;
+}
 
+function getPlatformIcon(platform) {
+  const icons = {
+    'Uber': '<i class="fa-brands fa-uber"></i>',
+    'Rapido': '<i class="fa-solid fa-bolt"></i>',
+    'Ola': '<i class="fa-solid fa-taxi"></i>'
+  };
+  return icons[platform] || '🚗';
+}
 
+function getTimeAgo(date) {
+  const now = new Date();
+  const seconds = Math.floor((now - date) / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 0) return `${days} day${days > 1 ? 's' : ''} ago`;
+  if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  if (minutes > 0) return `${minutes} min ago`;
+  return 'just now';
+}
+
+/* ---------- UPDATE RATING BANNER ---------- */
+function updateRatingBanner() {
+  if (allReviews.length === 0) return;
+
+  // Calculate average
+  const avgRating = allReviews.reduce((sum, r) => sum + r.stars, 0) / allReviews.length;
+
+  // Update big number
+  document.getElementById('ratingBig').textContent = avgRating.toFixed(2);
+
+  // Update stars
+  const starsHtml = renderStars(Math.round(avgRating));
+  document.getElementById('ratingStars').innerHTML = starsHtml;
+
+  // Update count
+  document.getElementById('ratingCount').textContent = 
+    `${allReviews.length} review${allReviews.length !== 1 ? 's' : ''}`;
+}
+
+/* ---------- UTILITY FUNCTIONS ---------- */
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+/* Export functions for onclick handlers */
+window.openReviewModal = openReviewModal;
+window.closeReviewModal = closeReviewModal;
